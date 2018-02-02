@@ -28,4 +28,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'com.andrognito.pinlockview:pinlockview:2.1.0'
+    compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
 }

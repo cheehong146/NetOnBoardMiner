@@ -5,11 +5,25 @@ package com.example.netonboard.netonboardminer.Object;
  */
 
 public class Account {
+    private int walletId;
     private String walletType;
     private String walletDescription;
 
-    public Account(String walletType, String walletDescription) {
+    public Account(int walletId, String walletType, String walletDescription) {
+        this.walletId = walletId;
         this.walletType = walletType;
+        this.walletDescription = walletDescription;
+    }
+
+    public int getWalletId() {
+        return walletId;
+    }
+
+    public void setWalletId(int walletId) {
+        this.walletId = walletId;
+    }
+
+    public void setWalletDescription(String walletDescription) {
         this.walletDescription = walletDescription;
     }
 
