@@ -8,6 +8,7 @@ import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +22,7 @@ import org.w3c.dom.Text;
 public class PinActivity extends AppCompatActivity {
     private static final String TAG = "PinActivity";
 
-    private TextView tv_pinInfo;
+    private TextView tv_pinInfo, tv_pin_explain;
     private PinLockView pinLockView;
     private PinLockListener pinLockListener;
     private IndicatorDots indicatorDots;
@@ -36,6 +37,8 @@ public class PinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pin);
 
         tv_pinInfo = (TextView) findViewById(R.id.tv_pin_header);
+        tv_pin_explain = (TextView) findViewById(R.id.tv_pin_explain);
+        tv_pin_explain.setText("This PIN is to identify that you are the current user of the device.\nThe PIN will only be stored in your current device.");
 
         sharedPreferences = this.getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -46,6 +49,15 @@ public class PinActivity extends AppCompatActivity {
         pinLockView = (PinLockView) findViewById(R.id.pinlock_view);
         indicatorDots = (IndicatorDots) findViewById(R.id.indicator_dots);
         pinLockView.attachIndicatorDots(indicatorDots);
+
+        if (pinExist) {
+            tv_pin_explain.setVisibility(View.INVISIBLE);
+            tv_pinInfo.setText("Enter PIN");
+        } else {
+            tv_pinInfo.setText("Create PIN");
+            tv_pin_explain.setVisibility(View.VISIBLE);
+        }
+
 
         pinLockListener = new PinLockListener() {
             @Override
@@ -60,13 +72,13 @@ public class PinActivity extends AppCompatActivity {
                         Log.e(TAG, "Wrong pinCode");
                         Toast toast = Toast.makeText(PinActivity.this, "Wrong Pin", Toast.LENGTH_SHORT);
                         toast.show();
+                        pinLockView.resetPinLockView();
                     }
                 } else {
-                    Log.i(TAG, "REGISTER PASS");
-                    tv_pinInfo.setText("Confirm PIN");
                     if (firstPin == null) {
                         firstPin = pin;
                         pinLockView.resetPinLockView();
+                        tv_pinInfo.setText("Confirm PIN");
                     } else if (firstPin.equals(pin)) {
                         tv_pinInfo.setText("PIN Match");
                         tv_pinInfo.setTextColor(Color.GREEN);
@@ -78,7 +90,7 @@ public class PinActivity extends AppCompatActivity {
                     } else {
                         Vibrator vibrate = (Vibrator) PinActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
                         vibrate.vibrate(500);
-                        tv_pinInfo.setText("Register PIN again");
+                        tv_pinInfo.setText("Create PIN again");
                         pinLockView.resetPinLockView();
                         firstPin = null;
                     }

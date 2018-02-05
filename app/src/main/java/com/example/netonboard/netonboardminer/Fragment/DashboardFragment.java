@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ import cz.msebera.android.httpclient.Header;
  */
 
 public class DashboardFragment extends Fragment {
+    private static final String TAG = "DashboardFragment";
+
     private Context context;
     Spinner spinner_select;
     TextView tv_btc_balance_amt, tv_time_left, tv_miner_amt, tv_miner_active, tv_miner_inactive, tv_btc_earn_tot_amt, tv_btc_estimated_amt, tv_usd_exchange_tot;
@@ -71,19 +74,8 @@ public class DashboardFragment extends Fragment {
         tv_btc_interval_1d = (TextView) view.findViewById(R.id.tv_btc_interval_1d);
 
         alAccount = new ArrayList<>();
-        loadAccount();
 
-        spinner_select.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                changeAccount(alAccount.get(i));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        refreshFragment();
 
         return view;
     }
@@ -95,6 +87,9 @@ public class DashboardFragment extends Fragment {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String body = new String(responseBody);
                 try {
+                    if(alAccount.size() >= 0)
+                        alAccount.clear();
+
                     JSONArray jsonArray = new JSONArray(body);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject obj = jsonArray.getJSONObject(i);
@@ -109,6 +104,7 @@ public class DashboardFragment extends Fragment {
                         adapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, list);
                         spinner_select.setAdapter(adapter);
                     }
+                    Log.i(TAG, " data loaded");
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -122,6 +118,21 @@ public class DashboardFragment extends Fragment {
         });
     }
 
+    public void refreshFragment(){
+        loadAccount();
+
+        spinner_select.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                changeAccount(alAccount.get(i));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
 
     public void changeAccount(final Account account) {
         AsyncHttpClient client = new AsyncHttpClient();

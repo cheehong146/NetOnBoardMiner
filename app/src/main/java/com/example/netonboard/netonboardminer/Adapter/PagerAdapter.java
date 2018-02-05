@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.netonboard.netonboardminer.Fragment.DashboardFragment;
 
 import java.util.ArrayList;
 import java.util.List;

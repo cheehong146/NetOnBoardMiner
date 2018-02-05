@@ -5,48 +5,41 @@ import android.os.Bundle;
 
 import com.example.netonboard.netonboardminer.Adapter.PagerAdapter;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.example.netonboard.netonboardminer.Fragment.DashboardFragment;
 import com.example.netonboard.netonboardminer.Fragment.SettingFragment;
-import com.example.netonboard.netonboardminer.Object.Account;
-import com.example.netonboard.netonboardminer.Object.CrytoData;
 import com.example.netonboard.netonboardminer.R;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+
         final ViewPager viewPager = (ViewPager) findViewById(R.id.main_viewpager);
-        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        final PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         pagerAdapter.addFragment(new DashboardFragment());
         pagerAdapter.addFragment(new SettingFragment());
         viewPager.setAdapter(pagerAdapter);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshViewPager(pagerAdapter);
+            }
+        });
+
 
         final AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_nav);
         AHBottomNavigationItem dashboardNav = new AHBottomNavigationItem("Dashboard", R.drawable.ic_grid_on_black_24dp, R.color.colorBlack);
@@ -88,5 +81,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void refreshViewPager(PagerAdapter pagerAdapter) {
+        DashboardFragment dashboard = (DashboardFragment)pagerAdapter.getItem(0);
+        dashboard.refreshFragment();
+        pagerAdapter.notifyDataSetChanged();
+        Log.i(TAG, "REFRESHING");
+        swipeRefreshLayout.setRefreshing(false);
+    }
 
 }
