@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.netonboard.netonboardminer.Activity.ChangePinActivity"
+    tools:showIn="@layout/activity_change_pin">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layout_old_pin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp">
+
+        <EditText
+            android:id="@+id/input_old_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm PIN"
+            android:inputType="number" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layout_new_pin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_old_pin">
+
+        <EditText
+            android:id="@+id/input_new_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="New PIN"
+            android:inputType="number" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layout_new_pin_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_new_pin">
+
+        <EditText
+            android:id="@+id/input_new_pin_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="New PIN Confirm"
+            android:inputType="number" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_change_pin_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_new_pin_confirm"
+        android:layout_weight="1"
+        android:text="" />
+
+    <android.support.v7.widget.ButtonBarLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/layout_new_pin_confirm">
+
+        <Button
+            android:id="@+id/btn_pin_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm" />
+    </android.support.v7.widget.ButtonBarLayout>
+
+
+</RelativeLayout>

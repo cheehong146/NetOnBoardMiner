@@ -16,6 +16,7 @@ import com.andrognito.pinlockview.IndicatorDots;
 import com.andrognito.pinlockview.PinLockListener;
 import com.andrognito.pinlockview.PinLockView;
 import com.example.netonboard.netonboardminer.R;
+import com.securepreferences.SecurePreferences;
 
 import org.w3c.dom.Text;
 
@@ -40,11 +41,10 @@ public class PinActivity extends AppCompatActivity {
         tv_pin_explain = (TextView) findViewById(R.id.tv_pin_explain);
         tv_pin_explain.setText("This PIN is to identify that you are the current user of the device.\nThe PIN will only be stored in your current device.");
 
-        sharedPreferences = this.getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+        sharedPreferences = new SecurePreferences(this, "netbtcbth", "loginInfo.xml");
         editor = sharedPreferences.edit();
         final boolean pinExist = sharedPreferences.getBoolean("pinExist", false);
         final String storedPinCode = sharedPreferences.getString("pinCode", null);
-
 
         pinLockView = (PinLockView) findViewById(R.id.pinlock_view);
         indicatorDots = (IndicatorDots) findViewById(R.id.indicator_dots);
@@ -62,8 +62,6 @@ public class PinActivity extends AppCompatActivity {
         pinLockListener = new PinLockListener() {
             @Override
             public void onComplete(String pin) {
-                Log.i(TAG, pin);
-
                 if (pinExist) {
                     if (pin.equals(storedPinCode)) {
                         startActivity(new Intent(PinActivity.this, MainActivity.class));

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -41,7 +41,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
@@ -49,7 +49,7 @@
                         style="@style/top_header_subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_marginRight="5dp"
                         android:text="Active: 0" />
 
                     <TextView
@@ -57,7 +57,7 @@
                         style="@style/top_header_subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp"
                         android:text="Inactive: 0" />
                 </LinearLayout>
             </LinearLayout>
@@ -84,14 +84,34 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tv_btc_balance_amt"
+                            android:id="@+id/tv_live_hash"
+                            style="@style/top_header_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0.00" />
+
+                        <TextView
+                            android:id="@+id/tv_live_hash_desc"
+                            style="@style/top_header_subtitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Live HashRate" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_balance_amt"
                             style="@style/top_header_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="0.00000000 BTC" />
 
                         <TextView
-                            android:id="@+id/tv_btc_balance_desc"
+                            android:id="@+id/tv_balance_desc"
                             style="@style/top_header_subtitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -103,18 +123,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tv_time_left"
-                            style="@style/top_header_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="9D 11H" />
-
-                        <TextView
-                            style="@style/top_header_subtitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Time left" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -122,18 +130,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tv_usd_exchange_tot"
-                            style="@style/top_header_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="0.0000000USD" />
-
-                        <TextView
-                            style="@style/top_header_subtitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="USD Exchange Total" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -149,19 +145,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tv_btc_estimated_amt"
-                            style="@style/top_header_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="0.00000000 BTC" />
-
-                        <TextView
-                            android:id="@+id/tv_btc_estimated_desc"
-                            style="@style/top_header_subtitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Est. Earning Today" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -170,14 +153,34 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tv_btc_earn_tot_amt"
+                            android:id="@+id/tv_miner_hash"
+                            style="@style/top_header_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0.00" />
+
+                        <TextView
+                            android:id="@+id/tv_miner_hash_desc"
+                            style="@style/top_header_subtitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Miner HashRate" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_tot_earn_amt"
                             style="@style/top_header_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="0.00000000 BTC" />
 
                         <TextView
-                            android:id="@+id/tv_btc_earn_tot_desc"
+                            android:id="@+id/tv_tot_earn_amt_desc"
                             style="@style/top_header_subtitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -215,10 +218,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Balance" />
+                        android:text="Conversion Rate (USD)" />
 
                     <TextView
-                        android:id="@+id/tv_account_balance_amt"
+                        android:id="@+id/tv_account_conversion_rate"
                         style="@style/body_item_right"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -237,10 +240,32 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Tot Amount Paid" />
+                        android:text="Earn (USD)" />
 
                     <TextView
-                        android:id="@+id/tv_account_tot_amt_paid"
+                        android:id="@+id/tv_account_earn_usd"
+                        style="@style/body_item_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="DATA" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/sub_body_item_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/body_item_left"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Balance (USD)" />
+
+                    <TextView
+                        android:id="@+id/tv_account_balance_amt_usd"
                         style="@style/body_item_right"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -258,7 +283,7 @@
                     style="@style/sub_body_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Interval Earning" />
+                    android:text="Estimated earning" />
 
                 <LinearLayout
                     style="@style/sub_body_item_container"
@@ -267,14 +292,15 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_estimated_earning_day_desc"
                         style="@style/body_item_left"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="10 Minute" />
+                        android:text="Day" />
 
                     <TextView
-                        android:id="@+id/tv_btc_interval_10m"
+                        android:id="@+id/tv_estimated_earning_day"
                         style="@style/body_item_right"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -289,14 +315,15 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_estimated_earning_week_desc"
                         style="@style/body_item_left"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="30 Minute" />
+                        android:text="Week" />
 
                     <TextView
-                        android:id="@+id/tv_btc_interval_30m"
+                        android:id="@+id/tv_estimated_earning_week"
                         style="@style/body_item_right"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -311,14 +338,15 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_estimated_earning_month_desc"
                         style="@style/body_item_left"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="1 Hour" />
+                        android:text="Month" />
 
                     <TextView
-                        android:id="@+id/tv_btc_interval_1hr"
+                        android:id="@+id/tv_estimated_earning_month"
                         style="@style/body_item_right"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -333,21 +361,44 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_estimated_earning_year_desc"
                         style="@style/body_item_left"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="1 Day" />
+                        android:text="Year" />
 
                     <TextView
-                        android:id="@+id/tv_btc_interval_1d"
+                        android:id="@+id/tv_estimated_earning_year"
                         style="@style/body_item_right"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="DATA" />
                 </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/sub_body_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Miner" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_worker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

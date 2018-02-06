@@ -30,4 +30,6 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.andrognito.pinlockview:pinlockview:2.1.0'
     compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
+    compile 'com.scottyab:secure-preferences-lib:0.1.4'
+    compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
 }

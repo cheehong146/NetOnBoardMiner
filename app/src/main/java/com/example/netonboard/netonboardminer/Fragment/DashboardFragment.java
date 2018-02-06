@@ -1,9 +1,12 @@
 package com.example.netonboard.netonboardminer.Fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +16,23 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.netonboard.netonboardminer.Adapter.WorkerAdapter;
+import com.example.netonboard.netonboardminer.Interface.RecyclerViewOnClickListener;
 import com.example.netonboard.netonboardminer.Object.Account;
 import com.example.netonboard.netonboardminer.Object.CrytoData;
+import com.example.netonboard.netonboardminer.Object.Worker;
 import com.example.netonboard.netonboardminer.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.securepreferences.SecurePreferences;
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -36,12 +46,17 @@ public class DashboardFragment extends Fragment {
 
     private Context context;
     Spinner spinner_select;
-    TextView tv_btc_balance_amt, tv_time_left, tv_miner_amt, tv_miner_active, tv_miner_inactive, tv_btc_earn_tot_amt, tv_btc_estimated_amt, tv_usd_exchange_tot;
-    TextView tv_account_balance_amt, tv_account_tot_amt_paid;
-    TextView tv_btc_interval_10m, tv_btc_interval_30m, tv_btc_interval_1hr, tv_btc_interval_1d;
+    TextView tv_miner_amt, tv_miner_active, tv_miner_inactive, tv_live_hash, tv_miner_hash,tv_tot_earn_amt, tv_balance_amt;
+    TextView tv_account_conversion_rate, tv_account_earn_usd, tv_account_balance_amt_usd;
+    TextView tv_estimated_earning_day, tv_estimated_earning_week, tv_estimated_earning_month, tv_estimated_earning_year;
+    TextView tv_estimated_earning_day_desc, tv_estimated_earning_week_desc, tv_estimated_earning_month_desc, tv_estimated_earning_year_desc;
+
 
     ArrayAdapter<String> adapter;
     ArrayList<Account> alAccount;
+    RecyclerView rvWorker;
+
+    SharedPreferences sharedPreferences;
 
     public DashboardFragment() {
     }
@@ -57,24 +72,30 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
+        sharedPreferences = new SecurePreferences(getContext(), "netbtcbth", "loginInfo.xml");
+
         spinner_select = (Spinner) view.findViewById(R.id.spinner_select);
-        tv_btc_balance_amt = (TextView) view.findViewById(R.id.tv_btc_balance_amt);
-        tv_time_left = (TextView) view.findViewById(R.id.tv_time_left);
         tv_miner_amt = (TextView) view.findViewById(R.id.tv_miner_amt);
         tv_miner_active = (TextView) view.findViewById(R.id.tv_miner_active);
         tv_miner_inactive = (TextView) view.findViewById(R.id.tv_miner_inactive);
-        tv_btc_earn_tot_amt = (TextView) view.findViewById(R.id.tv_btc_earn_tot_amt);
-        tv_btc_estimated_amt = (TextView) view.findViewById(R.id.tv_btc_estimated_amt);
-        tv_usd_exchange_tot = (TextView) view.findViewById(R.id.tv_usd_exchange_tot);
-        tv_account_balance_amt = (TextView) view.findViewById(R.id.tv_account_balance_amt);
-        tv_account_tot_amt_paid = (TextView) view.findViewById(R.id.tv_account_tot_amt_paid);
-        tv_btc_interval_10m = (TextView) view.findViewById(R.id.tv_btc_interval_10m);
-        tv_btc_interval_30m = (TextView) view.findViewById(R.id.tv_btc_interval_30m);
-        tv_btc_interval_1hr = (TextView) view.findViewById(R.id.tv_btc_interval_1hr);
-        tv_btc_interval_1d = (TextView) view.findViewById(R.id.tv_btc_interval_1d);
+        tv_miner_hash = (TextView) view.findViewById(R.id.tv_miner_hash);
+        tv_live_hash = (TextView) view.findViewById(R.id.tv_live_hash);
+        tv_tot_earn_amt = (TextView) view.findViewById(R.id.tv_tot_earn_amt);
+        tv_account_conversion_rate = (TextView) view.findViewById(R.id.tv_account_conversion_rate);
+        tv_account_earn_usd = (TextView) view.findViewById(R.id.tv_account_earn_usd);
+        tv_balance_amt = (TextView) view.findViewById(R.id.tv_balance_amt);
+        tv_account_balance_amt_usd = (TextView) view.findViewById(R.id.tv_account_balance_amt_usd);
+        tv_estimated_earning_day_desc = (TextView) view.findViewById(R.id.tv_estimated_earning_day_desc);
+        tv_estimated_earning_week_desc = (TextView) view.findViewById(R.id.tv_estimated_earning_week_desc);
+        tv_estimated_earning_month_desc = (TextView) view.findViewById(R.id.tv_estimated_earning_month_desc);
+        tv_estimated_earning_year_desc = (TextView) view.findViewById(R.id.tv_estimated_earning_year_desc);
+        tv_estimated_earning_day = (TextView)view.findViewById(R.id.tv_estimated_earning_day);
+        tv_estimated_earning_week = (TextView)view.findViewById(R.id.tv_estimated_earning_week);
+        tv_estimated_earning_month = (TextView)view.findViewById(R.id.tv_estimated_earning_month);
+        tv_estimated_earning_year = (TextView)view.findViewById(R.id.tv_estimated_earning_year);
+        rvWorker = (RecyclerView) view.findViewById(R.id.rv_worker);
 
         alAccount = new ArrayList<>();
-
         refreshFragment();
 
         return view;
@@ -87,7 +108,7 @@ public class DashboardFragment extends Fragment {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String body = new String(responseBody);
                 try {
-                    if(alAccount.size() >= 0)
+                    if (alAccount.size() >= 0)
                         alAccount.clear();
 
                     JSONArray jsonArray = new JSONArray(body);
@@ -118,7 +139,7 @@ public class DashboardFragment extends Fragment {
         });
     }
 
-    public void refreshFragment(){
+    public void refreshFragment() {
         loadAccount();
 
         spinner_select.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -135,22 +156,57 @@ public class DashboardFragment extends Fragment {
     }
 
     public void changeAccount(final Account account) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://cloudsub04.trio-mobile.com/curl/mobile/bitcoin/bitcoin_info.php?t=" + account.getWalletId(), new AsyncHttpResponseHandler() {
+        RequestParams requestParams = new RequestParams();
+
+        int userID = sharedPreferences.getInt("userID", -1);
+        String time = dateFormat.format(System.currentTimeMillis());
+//        String bitsystem = "netCrypto";
+//        String hash = String.valueOf(userID) + time + bitsystem;
+//        byte[] hashResult;
+//        try {
+//            MessageDigest digest = MessageDigest.getInstance("MD5");
+//            hashResult = digest.digest(hash.getBytes());
+//            requestParams.put("hash_result", hashResult.toString());
+//        }catch (NoSuchAlgorithmException e){
+//            e.printStackTrace();
+//        }
+
+        requestParams.put("uid", sharedPreferences.getInt("userID", -1));
+        requestParams.put("t", account.getWalletId());
+//        requestParams.put("current_time", time);
+
+        client.get("http://cloudsub01.trio-mobile.com:81/bitcoin/api/mobile/api_home.php?uid=" + userID + "&c=" + account.getWalletDescription() + " &cid=" + account.getWalletId(), new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String body = new String(responseBody);
-                try {
+                try{
                     JSONObject jsonObject = new JSONObject(body);
-                    CrytoData cryptoData = new CrytoData(jsonObject.getDouble("earn_24h"), jsonObject.getDouble("earn_total"), jsonObject.getDouble("paid_out")
-                            , jsonObject.getDouble("balance"), jsonObject.getDouble("earntotal_usd"), jsonObject.getString("hashrate_last_10m"), jsonObject.getString("hashrate_last_30m")
-                            , jsonObject.getString("hashrate_last_1h"), jsonObject.getString("hashrate_last_1d"), jsonObject.getInt("tot_workers"), jsonObject.getInt("active_workers")
-                            , jsonObject.getInt("inactive_workers"), jsonObject.getString("time_left"));
-                    initUI(account, cryptoData);
-                } catch (JSONException e) {
+                    JSONObject estimatedEarning = jsonObject.getJSONObject("estimate_earning");
+                    JSONObject summary = jsonObject.getJSONObject("summary");
+                    JSONArray worker = jsonObject.getJSONArray("worker_list");
+                    account.setEstimatedEarningDay(estimatedEarning.getString("day"));
+                    account.setEstimatedEarningWeek(estimatedEarning.getString("week"));
+                    account.setEstimatedEarningMonth(estimatedEarning.getString("month"));
+                    account.setEstimatedEarningYear(estimatedEarning.getString("year"));
+                    CrytoData crytoData = new CrytoData(summary.getDouble("f_usd_rate"), summary.getInt("f_active_miner"), summary.getInt("f_inactive_miner"), summary.getInt("f_total_miner")
+                            , summary.getDouble("f_balance"), summary.getDouble("f_balance_usd"), summary.getDouble("f_total_earn"), summary.getDouble("f_total_earn_usd")
+                    , summary.getString("s_live_hashrate"), summary.getString("s_miner_hashrate"));
+
+                    ArrayList<Worker> alWorker = new ArrayList<>();
+                    for (int i = 0; i < worker.length(); i++) {
+                        JSONObject workerObj = worker.getJSONObject(i);
+                        alWorker.add(new Worker(workerObj.getString("s_link_status"), "20d11h11m11s", workerObj.getInt("worker_id"), workerObj.getString("s_worker_id")));
+                    }
+
+
+                    updateUI(account, crytoData, alWorker);
+                }catch (JSONException e){
                     e.printStackTrace();
                 }
-
 
             }
 
@@ -161,21 +217,38 @@ public class DashboardFragment extends Fragment {
         });
     }
 
-    public void initUI(Account account, CrytoData obj) {
-        tv_miner_amt.setText(obj.getTotWorker() + " Miner");
-        tv_miner_active.setText("Active: " + obj.getActiveWorker());
-        tv_miner_inactive.setText("Inactive: " + obj.getInactiveWorker());
-        tv_btc_balance_amt.setText(String.format("%.8f", obj.getBalance()) + " " + account.getWalletDescription().toUpperCase());
-        tv_btc_estimated_amt.setText(String.format("%.8f", obj.getEarnLast24hr()) + " " + account.getWalletDescription().toUpperCase());
-        tv_btc_earn_tot_amt.setText(String.format("%.8f", obj.getEarnTot()) + " " + account.getWalletDescription().toUpperCase());
-        tv_usd_exchange_tot.setText(String.format("%.8f", obj.getEarnTotUSD()) + " USD");
-        tv_account_tot_amt_paid.setText(String.format("%.8f", obj.getTotAmountPaid()));
-        tv_account_balance_amt.setText(String.format("%.8f", obj.getBalance()) + " " + account.getWalletDescription().toUpperCase());
-        tv_btc_interval_10m.setText(obj.getHashRateLast10m());
-        tv_btc_interval_30m.setText(obj.getHashRateLast30m());
-        tv_btc_interval_1hr.setText(obj.getHashRateLast1hr());
-        tv_btc_interval_1d.setText(obj.getHashRateLast1d());
-        tv_time_left.setText(obj.getTimeLeft());
+    public void updateUI(Account account, CrytoData obj, final ArrayList<Worker> alWorker) {
 
+        String currencyType = account.getWalletDescription().toUpperCase();
+        tv_miner_amt.setText(obj.getTotMiner() + " Worker");
+        tv_miner_active.setText("Active: " + obj.getActiveMiner());
+        tv_miner_inactive.setText("Inactive: " + obj.getInactiveMiner());
+        tv_balance_amt.setText(String.format("%.8f", obj.getBalance()) + " " + currencyType);
+        tv_tot_earn_amt.setText(String.format("%.8f", obj.getTotEarn()) + " " + currencyType);
+        tv_live_hash.setText(obj.getLiveHashRate());
+        tv_miner_hash.setText(obj.getMinerHashRate());
+        tv_account_conversion_rate.setText(String.format("%.4f", obj.getUsdRate()));
+        tv_account_earn_usd.setText(String.format("%.8f", obj.getTotEarnUsd()));
+        tv_account_balance_amt_usd.setText(String.format("%.8f", obj.getBalanceUsd()));
+
+        tv_estimated_earning_day_desc.setText("Day (" + currencyType + ")");
+        tv_estimated_earning_week_desc.setText("Week (" + currencyType + ")");
+        tv_estimated_earning_month_desc.setText("Month (" + currencyType + ")");
+        tv_estimated_earning_year_desc.setText("Year (" + currencyType + ")");
+        tv_estimated_earning_day.setText(account.getEstimatedEarningDay());
+        tv_estimated_earning_week.setText(account.getEstimatedEarningWeek());
+        tv_estimated_earning_month.setText(account.getEstimatedEarningMonth());
+        tv_estimated_earning_year.setText(account.getEstimatedEarningYear());
+
+        WorkerAdapter workerAdapter = new WorkerAdapter(alWorker, new RecyclerViewOnClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                System.out.println(alWorker.get(position).toString());
+            }
+        });
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rvWorker.setLayoutManager(layoutManager);
+        rvWorker.setAdapter(workerAdapter);
+        rvWorker.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
     }
 }

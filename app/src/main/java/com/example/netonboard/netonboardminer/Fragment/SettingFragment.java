@@ -16,8 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.netonboard.netonboardminer.Activity.ChangePinActivity;
 import com.example.netonboard.netonboardminer.Activity.LoginActivity;
 import com.example.netonboard.netonboardminer.R;
+import com.securepreferences.SecurePreferences;
 
 /**
  * Created by Netonboard on 2/2/2018.
@@ -39,6 +41,7 @@ public class SettingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
         final Button btn_logout = (Button) view.findViewById(R.id.btn_logout);
+        final Button btn_change_pin = (Button) view.findViewById(R.id.btn_change_pin);
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +52,7 @@ public class SettingFragment extends Fragment {
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = new SecurePreferences(getContext(), "netbtcbth", "loginInfo.xml");
                         SharedPreferences.Editor edit = sharedPreferences.edit();
                         edit.clear();
                         edit.commit();
@@ -67,6 +70,14 @@ public class SettingFragment extends Fragment {
                     }
                 });
                 builder.show();
+            }
+        });
+
+
+        btn_change_pin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), ChangePinActivity.class));
             }
         });
         return view;

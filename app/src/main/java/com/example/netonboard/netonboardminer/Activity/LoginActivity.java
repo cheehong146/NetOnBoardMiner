@@ -15,9 +15,13 @@ import com.example.netonboard.netonboardminer.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.securepreferences.SecurePreferences;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -26,9 +30,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText tf_email, tf_password;
     TextView tv_error;
     Button btn_login;
-
-    String email = "abc";
-    String password = "123";
 
     SharedPreferences sharedPreferences;
 
@@ -41,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         tf_password = (EditText) findViewById(R.id.input_password);
         tv_error = (TextView) findViewById(R.id.tv_login_error);
         btn_login = (Button) findViewById(R.id.btn_login);
-        sharedPreferences = this.getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+        sharedPreferences = new SecurePreferences(this, "netbtcbth", "loginInfo.xml");
 
         if (sharedPreferences.getBoolean("loginBefore", false)) {
             startActivity(new Intent(LoginActivity.this, PinActivity.class));
@@ -92,9 +93,10 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.i(TAG, "User authenticated");
                                 tv_error.setVisibility(View.GONE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putInt("userID", jsonObject.getInt("user_id"));
                                 editor.putBoolean("loginBefore", true);
                                 if (editor.commit())
-                                    Log.i(TAG, "commited");
+                                    Log.i(TAG, "committed");
                                 else
                                     Log.e(TAG, "not commited");
                                 startActivity(new Intent(LoginActivity.this, PinActivity.class));

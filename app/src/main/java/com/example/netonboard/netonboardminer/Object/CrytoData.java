@@ -5,58 +5,60 @@ package com.example.netonboard.netonboardminer.Object;
  */
 
 public class CrytoData {
-    private double earnLast24hr;
-    private double earnTot;
-    private double totAmountPaid;
+    private double usdRate;
+    private int totMiner;
+    private int activeMiner;
+    private int inactiveMiner;
     private double balance;
-    private double earnTotUSD;
-    private String hashRateLast10m;
-    private String hashRateLast30m;
-    private String hashRateLast1hr;
-    private String hashRateLast1d;
-    private int totWorker;
-    private int activeWorker;
-    private int inactiveWorker;
-    private String timeLeft;
+    private double balanceUsd;
+    private double totEarn;
+    private double totEarnUsd;
+    private String liveHashRate;
+    private String minerHashRate;
 
-    public CrytoData(double earnLast24hr, double earnTot, double totAmountPaid, double balance, double earnTotUSD, String hashRateLast10m, String hashRateLast30m, String hashRateLast1hr, String hashRateLast1d, int totWorker, int activeWorker, int inactiveWorker, String timeLeft) {
-        this.earnLast24hr = earnLast24hr;
-        this.earnTot = earnTot;
-        this.totAmountPaid = totAmountPaid;
+    public CrytoData(double usdRate, int totMiner, int activeMiner, int inactiveMiner, double balance, double balanceUsd, double totEarn, double totEarnUsd, String liveHashRate, String minerHashRate) {
+        this.usdRate = usdRate;
+        this.totMiner = totMiner;
+        this.activeMiner = activeMiner;
+        this.inactiveMiner = inactiveMiner;
         this.balance = balance;
-        this.earnTotUSD = earnTotUSD;
-        this.hashRateLast10m = hashRateLast10m;
-        this.hashRateLast30m = hashRateLast30m;
-        this.hashRateLast1hr = hashRateLast1hr;
-        this.hashRateLast1d = hashRateLast1d;
-        this.totWorker = totWorker;
-        this.activeWorker = activeWorker;
-        this.inactiveWorker = inactiveWorker;
-        this.timeLeft = timeLeft;
+        this.balanceUsd = balanceUsd;
+        this.totEarn = totEarn;
+        this.totEarnUsd = totEarnUsd;
+        this.liveHashRate = liveHashRate;
+        this.minerHashRate = minerHashRate;
     }
 
-    public double getEarnLast24hr() {
-        return earnLast24hr;
+    public double getUsdRate() {
+        return usdRate;
     }
 
-    public void setEarnLast24hr(double earnLast24hr) {
-        this.earnLast24hr = earnLast24hr;
+    public void setUsdRate(double usdRate) {
+        this.usdRate = usdRate;
     }
 
-    public double getEarnTot() {
-        return earnTot;
+    public int getTotMiner() {
+        return totMiner;
     }
 
-    public void setEarnTot(double earnTot) {
-        this.earnTot = earnTot;
+    public void setTotMiner(int totMiner) {
+        this.totMiner = totMiner;
     }
 
-    public double getTotAmountPaid() {
-        return totAmountPaid;
+    public int getActiveMiner() {
+        return activeMiner;
     }
 
-    public void setTotAmountPaid(double totAmountPaid) {
-        this.totAmountPaid = totAmountPaid;
+    public void setActiveMiner(int activeMiner) {
+        this.activeMiner = activeMiner;
+    }
+
+    public int getInactiveMiner() {
+        return inactiveMiner;
+    }
+
+    public void setInactiveMiner(int inactiveMiner) {
+        this.inactiveMiner = inactiveMiner;
     }
 
     public double getBalance() {
@@ -67,75 +69,43 @@ public class CrytoData {
         this.balance = balance;
     }
 
-    public double getEarnTotUSD() {
-        return earnTotUSD;
+    public double getBalanceUsd() {
+        return balanceUsd;
     }
 
-    public void setEarnTotUSD(double earnTotUSD) {
-        this.earnTotUSD = earnTotUSD;
+    public void setBalanceUsd(double balanceUsd) {
+        this.balanceUsd = balanceUsd;
     }
 
-    public String getHashRateLast10m() {
-        return hashRateLast10m;
+    public double getTotEarn() {
+        return totEarn;
     }
 
-    public void setHashRateLast10m(String hashRateLast10m) {
-        this.hashRateLast10m = hashRateLast10m;
+    public void setTotEarn(double totEarn) {
+        this.totEarn = totEarn;
     }
 
-    public String getHashRateLast30m() {
-        return hashRateLast30m;
+    public double getTotEarnUsd() {
+        return totEarnUsd;
     }
 
-    public void setHashRateLast30m(String hashRateLast30m) {
-        this.hashRateLast30m = hashRateLast30m;
+    public void setTotEarnUsd(double totEarnUsd) {
+        this.totEarnUsd = totEarnUsd;
     }
 
-    public String getHashRateLast1hr() {
-        return hashRateLast1hr;
+    public String getLiveHashRate() {
+        return liveHashRate;
     }
 
-    public int getTotWorker() {
-        return totWorker;
+    public void setLiveHashRate(String liveHashRate) {
+        this.liveHashRate = liveHashRate;
     }
 
-    public void setTotWorker(int totWorker) {
-        this.totWorker = totWorker;
+    public String getMinerHashRate() {
+        return minerHashRate;
     }
 
-    public int getActiveWorker() {
-        return activeWorker;
-    }
-
-    public void setActiveWorker(int activeWorker) {
-        this.activeWorker = activeWorker;
-    }
-
-    public int getInactiveWorker() {
-        return inactiveWorker;
-    }
-
-    public void setInactiveWorker(int inactiveWorker) {
-        this.inactiveWorker = inactiveWorker;
-    }
-
-    public void setHashRateLast1hr(String hashRateLast1hr) {
-        this.hashRateLast1hr = hashRateLast1hr;
-    }
-
-    public String getHashRateLast1d() {
-        return hashRateLast1d;
-    }
-
-    public void setHashRateLast1d(String hashRateLast1d) {
-        this.hashRateLast1d = hashRateLast1d;
-    }
-
-    public String getTimeLeft() {
-        return timeLeft;
-    }
-
-    public void setTimeLeft(String timeLeft) {
-        this.timeLeft = timeLeft;
+    public void setMinerHashRate(String minerHashRate) {
+        this.minerHashRate = minerHashRate;
     }
 }
