@@ -46,13 +46,8 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder
 
         holder.tv_worker_id.setText(worker.getDisplayWorkerID());
         holder.tv_worker_time_elapsed.setText(worker.getTimeElapsed());
-        holder.tv_worker_condition.setText(worker.getLinkStatus());
-
-        if(worker.getLinkStatus().equals("linked")){
-            holder.tv_worker_condition.setTextColor(Color.GREEN);
-        }else{
-            holder.tv_worker_condition.setTextColor(Color.RED);
-        }
+        holder.tv_worker_condition.setText(worker.getCondition());
+        holder.tv_pool_status.setText(worker.getLinkStatus());
 
     }
 
@@ -65,13 +60,14 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder
         public TextView tv_worker_id;
         public TextView tv_worker_condition;
         public TextView tv_worker_time_elapsed;
+        public TextView tv_pool_status;
 
         public ViewHolder(final View itemView) {
             super(itemView);
-
             tv_worker_id = (TextView) itemView.findViewById(R.id.tv_worker_id);
             tv_worker_condition = (TextView) itemView.findViewById(R.id.tv_worker_condition);
             tv_worker_time_elapsed = (TextView) itemView.findViewById(R.id.tv_worker_time_elapsed);
+            tv_pool_status = (TextView) itemView.findViewById(R.id.tv_pool_status);
         }
     }
 }

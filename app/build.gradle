@@ -32,4 +32,5 @@ dependencies {
     compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
     compile 'com.scottyab:secure-preferences-lib:0.1.4'
     compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+    compile 'de.codecrafters.tableview:tableview:2.8.0'
 }

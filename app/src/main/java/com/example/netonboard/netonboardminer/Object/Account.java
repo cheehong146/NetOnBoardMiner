@@ -1,9 +1,6 @@
 package com.example.netonboard.netonboardminer.Object;
 
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 /**
  * Created by Netonboard on 1/2/2018.
  */

@@ -1,6 +1,7 @@
 package com.example.netonboard.netonboardminer.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.netonboard.netonboardminer.Activity.WorkerDetailActivity;
 import com.example.netonboard.netonboardminer.Adapter.WorkerAdapter;
 import com.example.netonboard.netonboardminer.Interface.RecyclerViewOnClickListener;
 import com.example.netonboard.netonboardminer.Object.Account;
@@ -199,7 +201,7 @@ public class DashboardFragment extends Fragment {
                     ArrayList<Worker> alWorker = new ArrayList<>();
                     for (int i = 0; i < worker.length(); i++) {
                         JSONObject workerObj = worker.getJSONObject(i);
-                        alWorker.add(new Worker(workerObj.getString("s_link_status"), "20d11h11m11s", workerObj.getInt("worker_id"), workerObj.getString("s_worker_id")));
+                        alWorker.add(new Worker(workerObj.getString("s_link_status"), workerObj.getString("f_elapsed"), workerObj.getInt("worker_id"), workerObj.getString("s_worker_id"), workerObj.getString("s_condition")));
                     }
 
 
@@ -244,6 +246,9 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onItemClick(View v, int position) {
                 System.out.println(alWorker.get(position).toString());
+                Intent intent = new Intent(getContext(), WorkerDetailActivity.class);
+                intent.putExtra("workerID", alWorker.get(position).getWorkerID());
+                startActivity(intent);
             }
         });
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());

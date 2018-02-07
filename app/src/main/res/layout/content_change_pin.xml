@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Confirm PIN"
-            android:inputType="number" />
+            android:inputType="numberPassword" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="New PIN"
-            android:inputType="number" />
+            android:inputType="numberPassword" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="New PIN Confirm"
-            android:inputType="number" />
+            android:inputType="numberPassword" />
 
 
     </android.support.design.widget.TextInputLayout>

@@ -3,10 +3,9 @@ package com.example.netonboard.netonboardminer.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,16 +14,13 @@ import android.widget.TextView;
 import com.example.netonboard.netonboardminer.R;
 import com.securepreferences.SecurePreferences;
 
-import org.w3c.dom.Text;
-
-import java.sql.BatchUpdateException;
-
 public class ChangePinActivity extends AppCompatActivity {
-
+    private static final String TAG = "ChangePinActivity";
     Button btn_pin_change;
     SharedPreferences sharedPreferences;
     TextView tv_pin_error;
     EditText input_old_pin, input_new_pin, input_new_pin_confirm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +37,7 @@ public class ChangePinActivity extends AppCompatActivity {
         input_new_pin = (EditText) findViewById(R.id.input_new_pin);
         input_new_pin_confirm = (EditText) findViewById(R.id.input_new_pin_confirm);
 
-        sharedPreferences = new SecurePreferences(this, "netbthbtc", "loginInfo.xml");
-        String currentPin = sharedPreferences.getString("pinCode", null);
+        sharedPreferences = new SecurePreferences(this, "netbtcbth", "loginInfo.xml");
 
         btn_pin_change = (Button) findViewById(R.id.btn_pin_change);
 
@@ -53,21 +48,42 @@ public class ChangePinActivity extends AppCompatActivity {
                 String newPin = input_new_pin.getText().toString();
                 String newPinConfirm = input_new_pin_confirm.getText().toString();
 
-                if(oldPin.equals("") || newPin.equals("") || newPinConfirm.equals("") ){
+                if (oldPin.equals("") || newPin.equals("") || newPinConfirm.equals("")) {
+                    tv_pin_error.setTextColor(Color.RED);
                     tv_pin_error.setText("All 3 Field must be filled in");
-                }else{
-                    if(oldPin.equals(sharedPreferences.getString("pinCode", null))){
-                        if(newPin.equals(newPinConfirm)){
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("pinCode", null);
-                            if(editor.commit()) {
-                                tv_pin_error.setText("PIN Updated");
-                                tv_pin_error.setTextColor(Color.GREEN);
+                } else {
+                    if (oldPin.equals(sharedPreferences.getString("pinCode", null))) {
+                        if (newPin.length() == 4)
+                            if (newPin.equals(newPinConfirm)) {
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("pinCode", newPin);
+                                if (editor.commit()) {
+                                    tv_pin_error.setText("PIN Updated");
+                                    tv_pin_error.setTextColor(Color.GREEN);
+                                    input_old_pin.setText("");
+                                    input_new_pin.setText("");
+                                    input_new_pin_confirm.setText("");
+                                }
+                            } else {
+                                tv_pin_error.setTextColor(Color.RED);
+                                tv_pin_error.setText("new PIN doesn't match ");
+                                input_old_pin.setText("");
+                                input_new_pin.setText("");
+                                input_new_pin_confirm.setText("");
                             }
-                        }else{
-                            tv_pin_error.setText("new Pin and ");
+                            else{
+                            tv_pin_error.setTextColor(Color.RED);
+                            input_old_pin.setText("");
+                            input_new_pin.setText("");
+                            input_new_pin_confirm.setText("");
+                            tv_pin_error.setText("New PIN must be 4 number long");
                         }
-                    }else{
+                    } else {
+                        tv_pin_error.setTextColor(Color.RED);
+                        Log.d(TAG, sharedPreferences.getString("pinCode", null));
+                        input_old_pin.setText("");
+                        input_new_pin.setText("");
+                        input_new_pin_confirm.setText("");
                         tv_pin_error.setText("Old PIN doesn't match");
                     }
                 }

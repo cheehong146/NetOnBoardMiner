@@ -1,10 +1,9 @@
 package com.example.netonboard.netonboardminer.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,9 +18,6 @@ import com.securepreferences.SecurePreferences;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import cz.msebera.android.httpclient.Header;
 

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.netonboard.netonboardminer.Activity.WorkerDetailActivity">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:id="@+id/refresh_layout_worker"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_worker_pool_status_header"
+                style="@style/sub_body_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pool Status"/>
+
+            <de.codecrafters.tableview.SortableTableView
+                android:id="@+id/tableView_pool_status"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/tv_worker_pool_status_header"></de.codecrafters.tableview.SortableTableView>
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:id="@+id/tv_worker_antminer_header"
+                style="@style/sub_body_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tableView_pool_status"
+                android:text="Antminer" />
+
+            <de.codecrafters.tableview.SortableTableView
+                android:id="@+id/tableView_antminer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_worker_antminer_header">
+
+            </de.codecrafters.tableview.SortableTableView>
+        </RelativeLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>

@@ -28,11 +28,14 @@
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".Activity.PinActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".Activity.ChangePinActivity"
             android:label="@string/title_activity_change_pin"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activity.WorkerDetailActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

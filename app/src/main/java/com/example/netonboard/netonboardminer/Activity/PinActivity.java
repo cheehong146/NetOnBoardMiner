@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -17,8 +17,6 @@ import com.andrognito.pinlockview.PinLockListener;
 import com.andrognito.pinlockview.PinLockView;
 import com.example.netonboard.netonboardminer.R;
 import com.securepreferences.SecurePreferences;
-
-import org.w3c.dom.Text;
 
 public class PinActivity extends AppCompatActivity {
     private static final String TAG = "PinActivity";
