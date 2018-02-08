@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate()");
 
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.main_viewpager);
+        final ViewPager viewPager = findViewById(R.id.main_viewpager);
         final PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         pagerAdapter.addFragment(new DashboardFragment());
         pagerAdapter.addFragment(new SettingFragment());
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        final AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_nav);
+        final AHBottomNavigation bottomNavigation = findViewById(R.id.bottom_nav);
         AHBottomNavigationItem dashboardNav = new AHBottomNavigationItem("Dashboard", R.drawable.ic_grid_on_black_24dp, R.color.colorBlack);
         AHBottomNavigationItem settingNav = new AHBottomNavigationItem("Setting", R.drawable.ic_settings_black_24dp, R.color.colorBlack);
         bottomNavigation.addItem(dashboardNav);

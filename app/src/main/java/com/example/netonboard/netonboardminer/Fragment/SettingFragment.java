@@ -40,8 +40,8 @@ public class SettingFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
-        final Button btn_logout = (Button) view.findViewById(R.id.btn_logout);
-        final Button btn_change_pin = (Button) view.findViewById(R.id.btn_change_pin);
+        final Button btn_logout = view.findViewById(R.id.btn_logout);
+        final Button btn_change_pin = view.findViewById(R.id.btn_change_pin);
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override

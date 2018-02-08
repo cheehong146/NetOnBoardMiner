@@ -64,10 +64,10 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ViewHolder
 
         public ViewHolder(final View itemView) {
             super(itemView);
-            tv_worker_id = (TextView) itemView.findViewById(R.id.tv_worker_id);
-            tv_worker_condition = (TextView) itemView.findViewById(R.id.tv_worker_condition);
-            tv_worker_time_elapsed = (TextView) itemView.findViewById(R.id.tv_worker_time_elapsed);
-            tv_pool_status = (TextView) itemView.findViewById(R.id.tv_pool_status);
+            tv_worker_id = itemView.findViewById(R.id.tv_worker_id);
+            tv_worker_condition = itemView.findViewById(R.id.tv_worker_condition);
+            tv_worker_time_elapsed = itemView.findViewById(R.id.tv_worker_time_elapsed);
+            tv_pool_status = itemView.findViewById(R.id.tv_pool_status);
         }
     }
 }

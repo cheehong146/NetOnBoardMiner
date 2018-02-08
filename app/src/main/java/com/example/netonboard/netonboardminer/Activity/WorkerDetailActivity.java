@@ -33,6 +33,8 @@ public class WorkerDetailActivity extends AppCompatActivity {
 
     private SortableTableView tableviewPoolstatus;
     private SortableTableView tableviewAntminer;
+    private WorkerPoolTableAdapter poolTableAdapter;
+    private WorkerStatsTableAdapter statsTableAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private ArrayList<WorkerPool> alWorkerPool;
@@ -50,9 +52,9 @@ public class WorkerDetailActivity extends AppCompatActivity {
         final int workerID = getIntent().getIntExtra("workerID", -1);
         getSupportActionBar().setTitle("Worker " + workerID);
 
-        tableviewPoolstatus = (SortableTableView) findViewById(R.id.tableView_pool_status);
-        tableviewAntminer = (SortableTableView) findViewById(R.id.tableView_antminer);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout_worker);
+        tableviewPoolstatus = findViewById(R.id.tableView_pool_status);
+        tableviewAntminer = findViewById(R.id.tableView_antminer);
+        swipeRefreshLayout = findViewById(R.id.refresh_layout_worker);
         alWorkerPool = new ArrayList<>();
         alWorkerStats = new ArrayList<>();
 
@@ -75,12 +77,18 @@ public class WorkerDetailActivity extends AppCompatActivity {
         tableviewAntminer.setColumnComparator(2, new AsicComparator());
         tableviewAntminer.setColumnComparator(3, new HwComparator());
 
-        loadWorkerData(workerID, this);
+
+        poolTableAdapter = new WorkerPoolTableAdapter(this, alWorkerPool);
+        statsTableAdapter = new WorkerStatsTableAdapter(this, alWorkerStats);
+        tableviewPoolstatus.setDataAdapter(poolTableAdapter);
+        tableviewAntminer.setDataAdapter(statsTableAdapter);
+
+        loadWorkerData(workerID);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadWorkerData(workerID, WorkerDetailActivity.this);
+                loadWorkerData(workerID);
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -88,7 +96,7 @@ public class WorkerDetailActivity extends AppCompatActivity {
     }
 
 
-    public void loadWorkerData(final int workerID, final Context context) {
+    public void loadWorkerData(final int workerID) {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://cloudsub01.trio-mobile.com:81/bitcoin/api/mobile/api_worker.php?wid=" + workerID + "&en=xxxx&dt=201802071122", new AsyncHttpResponseHandler() {
             @Override
@@ -114,8 +122,8 @@ public class WorkerDetailActivity extends AppCompatActivity {
                         alWorkerStats.add(new WorkerStats(obj.getInt("i_chain"), obj.getInt("i_temp"), obj.getInt("i_hw"), obj.getString("s_asic")));
                     }
 
-                    tableviewPoolstatus.setDataAdapter(new WorkerPoolTableAdapter(context, alWorkerPool));
-                    tableviewAntminer.setDataAdapter(new WorkerStatsTableAdapter(context, alWorkerStats));
+                    poolTableAdapter.notifyDataSetChanged();
+                    statsTableAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

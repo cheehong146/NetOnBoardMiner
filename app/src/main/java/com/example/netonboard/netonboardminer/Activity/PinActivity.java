@@ -35,8 +35,8 @@ public class PinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin);
 
-        tv_pinInfo = (TextView) findViewById(R.id.tv_pin_header);
-        tv_pin_explain = (TextView) findViewById(R.id.tv_pin_explain);
+        tv_pinInfo = findViewById(R.id.tv_pin_header);
+        tv_pin_explain = findViewById(R.id.tv_pin_explain);
         tv_pin_explain.setText("This PIN is to identify that you are the current user of the device.\nThe PIN will only be stored in your current device.");
 
         sharedPreferences = new SecurePreferences(this, "netbtcbth", "loginInfo.xml");
@@ -44,8 +44,8 @@ public class PinActivity extends AppCompatActivity {
         final boolean pinExist = sharedPreferences.getBoolean("pinExist", false);
         final String storedPinCode = sharedPreferences.getString("pinCode", null);
 
-        pinLockView = (PinLockView) findViewById(R.id.pinlock_view);
-        indicatorDots = (IndicatorDots) findViewById(R.id.indicator_dots);
+        pinLockView = findViewById(R.id.pinlock_view);
+        indicatorDots = findViewById(R.id.indicator_dots);
         pinLockView.attachIndicatorDots(indicatorDots);
 
         if (pinExist) {

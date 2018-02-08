@@ -76,26 +76,26 @@ public class DashboardFragment extends Fragment {
 
         sharedPreferences = new SecurePreferences(getContext(), "netbtcbth", "loginInfo.xml");
 
-        spinner_select = (Spinner) view.findViewById(R.id.spinner_select);
-        tv_miner_amt = (TextView) view.findViewById(R.id.tv_miner_amt);
-        tv_miner_active = (TextView) view.findViewById(R.id.tv_miner_active);
-        tv_miner_inactive = (TextView) view.findViewById(R.id.tv_miner_inactive);
-        tv_miner_hash = (TextView) view.findViewById(R.id.tv_miner_hash);
-        tv_live_hash = (TextView) view.findViewById(R.id.tv_live_hash);
-        tv_tot_earn_amt = (TextView) view.findViewById(R.id.tv_tot_earn_amt);
-        tv_account_conversion_rate = (TextView) view.findViewById(R.id.tv_account_conversion_rate);
-        tv_account_earn_usd = (TextView) view.findViewById(R.id.tv_account_earn_usd);
-        tv_balance_amt = (TextView) view.findViewById(R.id.tv_balance_amt);
-        tv_account_balance_amt_usd = (TextView) view.findViewById(R.id.tv_account_balance_amt_usd);
-        tv_estimated_earning_day_desc = (TextView) view.findViewById(R.id.tv_estimated_earning_day_desc);
-        tv_estimated_earning_week_desc = (TextView) view.findViewById(R.id.tv_estimated_earning_week_desc);
-        tv_estimated_earning_month_desc = (TextView) view.findViewById(R.id.tv_estimated_earning_month_desc);
-        tv_estimated_earning_year_desc = (TextView) view.findViewById(R.id.tv_estimated_earning_year_desc);
-        tv_estimated_earning_day = (TextView)view.findViewById(R.id.tv_estimated_earning_day);
-        tv_estimated_earning_week = (TextView)view.findViewById(R.id.tv_estimated_earning_week);
-        tv_estimated_earning_month = (TextView)view.findViewById(R.id.tv_estimated_earning_month);
-        tv_estimated_earning_year = (TextView)view.findViewById(R.id.tv_estimated_earning_year);
-        rvWorker = (RecyclerView) view.findViewById(R.id.rv_worker);
+        spinner_select = view.findViewById(R.id.spinner_select);
+        tv_miner_amt = view.findViewById(R.id.tv_miner_amt);
+        tv_miner_active = view.findViewById(R.id.tv_miner_active);
+        tv_miner_inactive = view.findViewById(R.id.tv_miner_inactive);
+        tv_miner_hash = view.findViewById(R.id.tv_miner_hash);
+        tv_live_hash = view.findViewById(R.id.tv_live_hash);
+        tv_tot_earn_amt = view.findViewById(R.id.tv_tot_earn_amt);
+        tv_account_conversion_rate = view.findViewById(R.id.tv_account_conversion_rate);
+        tv_account_earn_usd = view.findViewById(R.id.tv_account_earn_usd);
+        tv_balance_amt = view.findViewById(R.id.tv_balance_amt);
+        tv_account_balance_amt_usd = view.findViewById(R.id.tv_account_balance_amt_usd);
+        tv_estimated_earning_day_desc = view.findViewById(R.id.tv_estimated_earning_day_desc);
+        tv_estimated_earning_week_desc = view.findViewById(R.id.tv_estimated_earning_week_desc);
+        tv_estimated_earning_month_desc = view.findViewById(R.id.tv_estimated_earning_month_desc);
+        tv_estimated_earning_year_desc = view.findViewById(R.id.tv_estimated_earning_year_desc);
+        tv_estimated_earning_day = view.findViewById(R.id.tv_estimated_earning_day);
+        tv_estimated_earning_week = view.findViewById(R.id.tv_estimated_earning_week);
+        tv_estimated_earning_month = view.findViewById(R.id.tv_estimated_earning_month);
+        tv_estimated_earning_year = view.findViewById(R.id.tv_estimated_earning_year);
+        rvWorker = view.findViewById(R.id.rv_worker);
 
         alAccount = new ArrayList<>();
         refreshFragment();

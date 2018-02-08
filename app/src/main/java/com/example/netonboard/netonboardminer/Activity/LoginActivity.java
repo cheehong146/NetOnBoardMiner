@@ -34,10 +34,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        tf_email = (EditText) findViewById(R.id.input_email);
-        tf_password = (EditText) findViewById(R.id.input_password);
-        tv_error = (TextView) findViewById(R.id.tv_login_error);
-        btn_login = (Button) findViewById(R.id.btn_login);
+        tf_email = findViewById(R.id.input_email);
+        tf_password = findViewById(R.id.input_password);
+        tv_error = findViewById(R.id.tv_login_error);
+        btn_login = findViewById(R.id.btn_login);
         sharedPreferences = new SecurePreferences(this, "netbtcbth", "loginInfo.xml");
 
         if (sharedPreferences.getBoolean("loginBefore", false)) {

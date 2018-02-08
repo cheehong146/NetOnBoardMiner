@@ -25,21 +25,21 @@ public class ChangePinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pin);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Change PIN code");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        tv_pin_error = (TextView) findViewById(R.id.tv_change_pin_error);
+        tv_pin_error = findViewById(R.id.tv_change_pin_error);
         tv_pin_error.setTextColor(Color.RED);
-        input_old_pin = (EditText) findViewById(R.id.input_old_pin);
-        input_new_pin = (EditText) findViewById(R.id.input_new_pin);
-        input_new_pin_confirm = (EditText) findViewById(R.id.input_new_pin_confirm);
+        input_old_pin = findViewById(R.id.input_old_pin);
+        input_new_pin = findViewById(R.id.input_new_pin);
+        input_new_pin_confirm = findViewById(R.id.input_new_pin_confirm);
 
         sharedPreferences = new SecurePreferences(this, "netbtcbth", "loginInfo.xml");
 
-        btn_pin_change = (Button) findViewById(R.id.btn_pin_change);
+        btn_pin_change = findViewById(R.id.btn_pin_change);
 
         btn_pin_change.setOnClickListener(new View.OnClickListener() {
             @Override
